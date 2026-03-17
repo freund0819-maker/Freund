@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --bg-color: #050505;
+  --text-primary: #f0f0f0;
+  --text-secondary: #a0a0a0;
+  --accent-color: #00ff41;
+  --accent-glow: 0 0 20px rgba(0, 255, 65, 0.4), 0 0 40px rgba(0, 255, 65, 0.2);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: transparent;
+  color: var(--text-primary);
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+/* Utilities */
+.app-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.canvas-container {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* Place it behind everything */
+  pointer-events: none; /* Let scroll events pass through */
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 10; /* Above the canvas */
+}
+
+/* Sections */
+section {
+  min-height: 100vh;
+  width: 100%;
+  padding: 100px 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  /* Use a dark glassy background to hide the section beneath while keeping a hint of the 3D bg */
+  background: linear-gradient(180deg, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.8) 100%);
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+}
+
+/* Bloomy Text */
+.text-glow {
+  color: var(--text-primary);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.text-glow-accent {
+  color: var(--accent-color);
+  text-shadow: var(--accent-glow);
+}
+
+/* Futuristic UI Elements */
+.futuristic-btn {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--accent-color);
+  padding: 12px 32px;
+  font-size: 1.2rem;
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 30px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+}
+
+.futuristic-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.15), transparent);
+  transition: all 0.5s ease;
+}
+
+.futuristic-btn:hover {
+  background: rgba(0, 255, 65, 0.1);
+  box-shadow: var(--accent-glow);
+}
+
+.futuristic-btn:hover::before {
+  left: 100%;
+}
+
+/* Vertical Slider UI */
+.vertical-slider {
+  -webkit-appearance: slider-vertical;
+  -moz-appearance: slider-vertical;
+  appearance: slider-vertical;
+  width: 12px; /* Set directly to match thumb width for perfect native centering */
+  background: transparent;
+  outline: none;
+  accent-color: var(--accent-color); /* Overrides browser default blue progress bar */
+}
+
+/* WebKit */
+.vertical-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: var(--accent-glow);
+  border: none;
+}
+
+.vertical-slider::-webkit-slider-runnable-track {
+  width: 2px;
+  background: rgba(0, 255, 65, 0.2);
+  border-radius: 1px;
+}
+
+/* Firefox */
+.vertical-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: var(--accent-glow);
+  border: none;
+}
+
+.vertical-slider::-moz-range-track {
+  width: 2px;
+  background: rgba(0, 255, 65, 0.2);
+  border-radius: 1px;
+}
+
+.vertical-slider::-moz-range-progress {
+  background: rgba(0, 255, 65, 0.2);
+}
+
+.vertical-slider::-moz-focus-outer {
+  border: 0;
+}
