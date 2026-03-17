@@ -1,6 +1,6 @@
-# FREUND0815 - 3D Artist Portfolio
+# FREUND0815 - Portfolio
 
-Welcome to your new futuristic portfolio!
+Welcome to your portfolio!
 
 > **A message from the developer:**
 > "I send my regards! Let me know if you want to add more renders or make any other changes to the gallery."
