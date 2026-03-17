@@ -27,18 +27,25 @@ If you want to run this project locally on your machine to test changes:
 
 To make your portfolio live on the internet for free using GitHub Pages, follow these exact steps:
 
-### 1. Update the Base URL
+### 1. Fork this Repository
+First, you need your own copy of this code on your GitHub account.
+1. Make sure you are logged into your GitHub account.
+2. Click the **"Fork"** button at the top right of this repository's page.
+3. Keep the repository name as `Freund` and click **Create fork**.
+4. You now have a copy of the code at `https://github.com/YOUR_USERNAME/Freund`.
+
+### 2. Update the Base URL
 Before building for GitHub Pages, you need to tell Vite the name of your repository. 
 Open `vite.config.js` in the root of the project and ensure the `base` property is set to your repository name. 
 
-If your repository URL is `https://github.com/Yancovert/Freund`, it should look like this:
+If your repository URL is `https://github.com/YOUR_USERNAME/Freund`, it should look like this:
 ```javascript
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/Freund/', // Add this line!
+  base: '/Freund/', // Make sure this matches your repository name!
 })
 ```
 
@@ -71,7 +78,7 @@ This command will automatically build your project and push it to a special `gh-
 5. Ensure the branch is set to `gh-pages` and the folder is `/ (root)`.
 6. Click **Save** if you made changes.
 
-In a few minutes, your site will be live at `https://Yancovert.github.io/Freund/`!
+In a few minutes, your site will be live.
 
 ---
 
