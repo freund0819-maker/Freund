@@ -1,62 +1,34 @@
-import React, { useRef, useLayoutEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import React from 'react';
+import TransitionCurtain from '../TransitionCurtain';
 
 export default function Competencies() {
-  const containerRef = useRef();
-
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.from(".skill-bar-fill", {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-        },
-        width: 0,
-        duration: 1.5,
-        stagger: 0.1,
-        ease: "power3.out"
-      });
-      gsap.from(".skill-item", {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-        },
-        opacity: 0,
-        y: 20,
-        duration: 1,
-        stagger: 0.1,
-        ease: "power3.out"
-      });
-    }, containerRef);
-    return () => ctx.revert();
-  }, []);
-
-  const skills = [
-    { name: 'Blender', level: '95%' },
-    { name: 'CLIP STUDIO PAINT', level: '85%' }
+  const tools = [
+    { name: 'Blender', xp: '5+ Years', description: '3D Modelling · Rendering · Rigging' },
+    { name: 'Clip Studio Paint', xp: '4+ Years', description: 'Digital Illustration · Compositing' },
   ];
 
   return (
-    <section ref={containerRef} id="competencies" style={{ backgroundColor: 'rgba(5,5,5,0.8)' }}>
-      <h2 className="text-glow-accent" style={{ fontSize: '3rem', marginBottom: '3rem', textAlign: 'center' }}>
-        COMPETENCIES
-      </h2>
-      <div style={{ maxWidth: '800px', margin: '0 auto', width: '100%' }}>
-        {skills.map((skill, i) => (
-          <div key={i} className="skill-item" style={{ marginBottom: '2rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-              <span className="text-glow" style={{ fontSize: '1.2rem' }}>{skill.name}</span>
-              <span style={{ color: 'var(--accent-color)' }}>{skill.level}</span>
+    <section id="competencies" style={{ backgroundColor: 'rgba(4,4,4,0.9)' }}>
+      <TransitionCurtain label="SKILLS" delay={0.7}>
+        <p className="section-label">Competencies</p>
+        <h2 style={{ fontSize: 'clamp(1.8rem, 5vw, 3.5rem)', marginBottom: '3rem', letterSpacing: '0.04em' }}>
+          TOOLS &amp; SKILLS
+        </h2>
+
+        <div style={{ maxWidth: '900px' }}>
+          {tools.map((tool, i) => (
+            <div key={i} className="tool-item">
+              <span className="tool-name">{tool.name}</span>
+              <div style={{ textAlign: 'right' }}>
+                <div className="tool-meta" style={{ color: 'var(--accent-color)', marginBottom: '0.3rem' }}>
+                  {tool.xp}
+                </div>
+                <div className="tool-meta">{tool.description}</div>
+              </div>
             </div>
-            <div style={{ width: '100%', height: '8px', background: 'var(--glass-border)', borderRadius: '4px', overflow: 'hidden' }}>
-              <div className="skill-bar-fill" style={{ width: skill.level, height: '100%', background: 'linear-gradient(90deg, var(--accent-color), #fff)', boxShadow: 'var(--accent-glow)' }}></div>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </TransitionCurtain>
     </section>
   );
 }
