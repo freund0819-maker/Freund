@@ -8,7 +8,7 @@ export default function Socials() {
       <TransitionCurtain label="CONTACT" delay={0.75}>
         <p className="section-label">Get in Touch</p>
 
-        <div style={{ maxWidth: '640px' }}>
+        <div className="glass-panel accent-corners" style={{ maxWidth: '640px', padding: '3rem 2.5rem', position: 'relative' }}>
           <h2 style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)', lineHeight: 1.05, marginBottom: '2rem', letterSpacing: '0.02em' }}>
             LET'S<br />CONNECT
           </h2>

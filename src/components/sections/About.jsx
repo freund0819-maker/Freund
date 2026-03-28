@@ -26,8 +26,14 @@ export default function About() {
             </p>
           </div>
 
-          {/* Image: constrained size, natural aspect ratio, right-aligned */}
-          <div style={{ overflow: 'hidden', maxWidth: '340px', marginLeft: 'auto' }}>
+          {/* Image: stylized border, refined size, right-aligned */}
+          <div className="glass-panel accent-corners" style={{ 
+            overflow: 'hidden', 
+            maxWidth: '420px', 
+            marginLeft: 'auto',
+            padding: '1rem',
+            borderRadius: '2px'
+          }}>
             <img
               src={freundImg}
               alt="Freund"
