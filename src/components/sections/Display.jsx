@@ -112,7 +112,7 @@ export default function Display() {
       beauty: render3,
       ao: render3_ao,
       solid: render3_solid,
-      span: 12,
+      span: 4,
     },
     {
       title: 'All an Illusion!',
