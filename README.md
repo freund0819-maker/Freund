@@ -23,62 +23,22 @@ If you want to run this project locally on your machine to test changes:
 
 ---
 
-## Deploying to GitHub Pages
+## Deploying to Vercel
 
-To make your portfolio live on the internet for free using GitHub Pages, follow these exact steps:
+To make your portfolio live on the internet using Vercel, follow these steps:
 
-### 1. Fork this Repository
-First, you need your own copy of this code on your GitHub account.
-1. Make sure you are logged into your GitHub account.
-2. Click the **"Fork"** button at the top right of this repository's page.
-3. Keep the repository name as `Freund` and click **Create fork**.
-4. You now have a copy of the code at `https://github.com/YOUR_USERNAME/Freund`.
+### 1. Push to GitHub
+Ensure your code is pushed to your GitHub repository at `https://github.com/freund0819-maker/Freund`.
 
-### 2. Update the Base URL
-Before building for GitHub Pages, you need to tell Vite the name of your repository. 
-Open `vite.config.js` in the root of the project and ensure the `base` property is set to your repository name. 
+### 2. Connect to Vercel
+1.  Go to [Vercel](https://vercel.com/) and log in (using your GitHub account).
+2.  Click **"Add New"** and select **"Project"**.
+3.  Import the `Freund` repository from your GitHub account.
+4.  Vercel will automatically detect that this is a **Vite** project.
+5.  Click **"Deploy"**.
 
-If your repository URL is `https://github.com/YOUR_USERNAME/Freund`, it should look like this:
-```javascript
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
-export default defineConfig({
-  plugins: [react()],
-  base: '/Freund/', // Make sure this matches your repository name!
-})
-```
-
-### 2. Install gh-pages package
-We will use a tool called `gh-pages` to automate the deployment.
-Run this command in your terminal:
-```bash
-npm install gh-pages --save-dev
-```
-
-### 3. Add deploy scripts to package.json
-Open your `package.json` file. Inside the `"scripts"` section, add these two lines:
-```json
-"predeploy": "npm run build",
-"deploy": "gh-pages -d dist"
-```
-
-### 4. Deploy!
-Whenever you are ready to publish your site or after making changes, simply run:
-```bash
-npm run deploy
-```
-This command will automatically build your project and push it to a special `gh-pages` branch on your GitHub repository.
-
-### 5. Check GitHub Settings
-1. Go to your repository on GitHub (`https://github.com/Yancovert/Freund`).
-2. Click on the **Settings** tab.
-3. On the left sidebar, click on **Pages**.
-4. Under "Build and deployment", ensure the **Source** is set to "Deploy from a branch".
-5. Ensure the branch is set to `gh-pages` and the folder is `/ (root)`.
-6. Click **Save** if you made changes.
-
-In a few minutes, your site will be live.
+### 3. Automatic Updates
+Every time you push changes to your GitHub repository, Vercel will automatically rebuild and redeploy your site!
 
 ---
 
