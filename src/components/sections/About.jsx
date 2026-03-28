@@ -4,8 +4,9 @@ import TransitionCurtain from '../TransitionCurtain';
 
 export default function About() {
   return (
-    <section id="about">
-      <TransitionCurtain label="ABOUT" delay={0.68}>
+    <section id="about" style={{ position: 'relative' }}>
+      <span className="section-number">03 / 04</span>
+      <TransitionCurtain label="ABOUT">
         <p className="section-label">About Me</p>
 
         <div style={{

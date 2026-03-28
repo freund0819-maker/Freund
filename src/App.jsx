@@ -1,19 +1,19 @@
 import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 
-// Components
 import Background3D from './components/Background3D';
+import Nav from './components/Nav';
 import SectionDivider from './components/SectionDivider';
 import Intro from './components/sections/Intro';
 import Display from './components/sections/Display';
+import About from './components/sections/About';
 import Competencies from './components/sections/Competencies';
 import Socials from './components/sections/Socials';
-import About from './components/sections/About';
 
-function App() {
+export default function App() {
   return (
     <div className="app-container">
-      {/* 3D Background Layer */}
+
       <div className="canvas-container">
         <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
           <Suspense fallback={null}>
@@ -22,8 +22,8 @@ function App() {
         </Canvas>
       </div>
 
-      {/* Foreground Content Layer */}
       <div className="content-wrapper">
+        <Nav />
         <Intro />
         <SectionDivider label="Gallery" />
         <Display />
@@ -37,5 +37,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

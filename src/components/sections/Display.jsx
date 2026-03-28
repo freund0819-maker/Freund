@@ -105,8 +105,9 @@ export default function Display() {
   ];
 
   return (
-    <section id="display">
-      <TransitionCurtain label="WORKS" delay={0.72}>
+    <section id="display" style={{ position: 'relative' }}>
+      <span className="section-number">02 / 04</span>
+      <TransitionCurtain label="WORKS">
         <p className="section-label">Selected Works</p>
         <h2 style={{ fontSize: 'clamp(1.8rem, 5vw, 3.5rem)', marginBottom: '3rem', letterSpacing: '0.04em' }}>
           GALLERY

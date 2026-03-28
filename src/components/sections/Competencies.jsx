@@ -8,8 +8,9 @@ export default function Competencies() {
   ];
 
   return (
-    <section id="competencies" style={{ backgroundColor: 'rgba(4,4,4,0.9)' }}>
-      <TransitionCurtain label="SKILLS" delay={0.7}>
+    <section id="competencies" style={{ position: 'relative' }}>
+      <span className="section-number">04 / 04</span>
+      <TransitionCurtain label="SKILLS">
         <p className="section-label">Competencies</p>
         <h2 style={{ fontSize: 'clamp(1.8rem, 5vw, 3.5rem)', marginBottom: '3rem', letterSpacing: '0.04em' }}>
           TOOLS &amp; SKILLS

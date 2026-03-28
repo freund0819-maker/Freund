@@ -4,8 +4,8 @@ import MagneticButton from '../MagneticButton';
 
 export default function Socials() {
   return (
-    <section id="socials" style={{ minHeight: '60vh', justifyContent: 'center' }}>
-      <TransitionCurtain label="CONTACT" delay={0.75}>
+    <section id="socials" style={{ minHeight: '60vh', justifyContent: 'center', position: 'relative' }}>
+      <TransitionCurtain label="CONTACT">
         <p className="section-label">Get in Touch</p>
 
         <div className="glass-panel accent-corners" style={{ maxWidth: '640px', padding: '3rem 2.5rem', position: 'relative' }}>
