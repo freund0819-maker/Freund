@@ -5,6 +5,7 @@ import * as THREE from 'three';
 
 function AmbientOrbs() {
   const meshRef = useRef();
+  const groupRef = useRef();
   const count = 80;
   
   const dummy = useMemo(() => new THREE.Object3D(), []);
@@ -18,12 +19,17 @@ function AmbientOrbs() {
       const xFactor = -35 + Math.random() * 70;
       const yFactor = -25 + Math.random() * 50;
       const zFactor = -45 + Math.random() * 70;
-      temp.push({ t, factor, speed, xFactor, yFactor, zFactor, scale: 0.3 + Math.random() * 1.8 });
+      temp.push({ t, factor, speed, xFactor, yFactor, zFactor, scale: 0.2 + Math.random() * 1.5 });
     }
     return temp;
   }, [count]);
 
   useFrame(() => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y += 0.0003;
+      groupRef.current.rotation.x += 0.0001;
+    }
+    
     if (!meshRef.current) return;
     particles.forEach((particle, i) => {
       let { t, factor, speed, xFactor, yFactor, zFactor, scale } = particle;
@@ -42,10 +48,12 @@ function AmbientOrbs() {
   });
 
   return (
-    <instancedMesh ref={meshRef} args={[null, null, count]}>
-      <sphereGeometry args={[0.5, 12, 12]} />
-      <meshBasicMaterial color="#00ff41" transparent opacity={0.2} toneMapped={false} />
-    </instancedMesh>
+    <group ref={groupRef}>
+      <instancedMesh ref={meshRef} args={[null, null, count]}>
+        <sphereGeometry args={[0.5, 12, 12]} />
+        <meshBasicMaterial color="#00ff41" transparent opacity={0.15} toneMapped={false} />
+      </instancedMesh>
+    </group>
   );
 }
 

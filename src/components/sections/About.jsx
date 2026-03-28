@@ -1,5 +1,5 @@
 import React from 'react';
-import freundImg from '../../assets/Freund.jpg';
+import freundImg from '../../assets/Freund.jpeg';
 import TransitionCurtain from '../TransitionCurtain';
 
 export default function About() {
