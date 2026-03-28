@@ -26,8 +26,8 @@ export default function About() {
             </p>
           </div>
 
-          {/* Image: purely aspect-ratio driven, no fixed height */}
-          <div style={{ overflow: 'hidden' }}>
+          {/* Image: constrained size, natural aspect ratio, right-aligned */}
+          <div style={{ overflow: 'hidden', maxWidth: '340px', marginLeft: 'auto' }}>
             <img
               src={freundImg}
               alt="Freund"

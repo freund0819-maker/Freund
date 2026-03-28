@@ -5,7 +5,7 @@ import * as THREE from 'three';
 
 function AmbientOrbs() {
   const meshRef = useRef();
-  const count = 50; // Optimized number of floating orbs
+  const count = 80;
   
   const dummy = useMemo(() => new THREE.Object3D(), []);
   
@@ -13,12 +13,12 @@ function AmbientOrbs() {
     const temp = [];
     for (let i = 0; i < count; i++) {
       const t = Math.random() * 100;
-      const factor = 10 + Math.random() * 20; // Radius of movement
-      const speed = 0.005 + Math.random() / 200; // Very slow, passive speed
-      const xFactor = -30 + Math.random() * 60;
-      const yFactor = -20 + Math.random() * 40;
-      const zFactor = -40 + Math.random() * 60; // Depth distribution
-      temp.push({ t, factor, speed, xFactor, yFactor, zFactor, scale: 0.5 + Math.random() * 1.5 });
+      const factor = 12 + Math.random() * 25;
+      const speed = 0.002 + Math.random() / 300;
+      const xFactor = -35 + Math.random() * 70;
+      const yFactor = -25 + Math.random() * 50;
+      const zFactor = -45 + Math.random() * 70;
+      temp.push({ t, factor, speed, xFactor, yFactor, zFactor, scale: 0.3 + Math.random() * 1.8 });
     }
     return temp;
   }, [count]);
@@ -29,7 +29,6 @@ function AmbientOrbs() {
       let { t, factor, speed, xFactor, yFactor, zFactor, scale } = particle;
       t = particle.t += speed;
       
-      // Organic, smooth Lissajous curve floating logic
       dummy.position.set(
         xFactor + Math.cos(t) * factor,
         yFactor + Math.sin(t) * factor,
@@ -44,9 +43,8 @@ function AmbientOrbs() {
 
   return (
     <instancedMesh ref={meshRef} args={[null, null, count]}>
-      <sphereGeometry args={[0.5, 8, 8]} />
-      {/* Soft basic material to act as light emitters for the bloom */}
-      <meshBasicMaterial color="#00ff41" transparent opacity={0.3} toneMapped={false} />
+      <sphereGeometry args={[0.5, 12, 12]} />
+      <meshBasicMaterial color="#00ff41" transparent opacity={0.2} toneMapped={false} />
     </instancedMesh>
   );
 }
@@ -54,28 +52,24 @@ function AmbientOrbs() {
 export default function Background3D() {
   return (
     <>
-      <color attach="background" args={['#050505']} />
-      <ambientLight intensity={0.5} />
+      <color attach="background" args={['#030303']} />
+      <ambientLight intensity={0.4} />
       
-      {/* Adds a very subtle global fog to blend far objects into the background */}
-      <fog attach="fog" args={['#050505', 10, 50]} />
+      <fog attach="fog" args={['#030303', 15, 60]} />
       
       <AmbientOrbs />
 
-      {/* Cinematic Post-Processing */}
       <EffectComposer disableNormalPass>
-        {/* Depth of Field to create out-of-focus "bokeh" shapes near and far from camera */}
         <DepthOfField 
-          focusDistance={0.05} 
-          focalLength={0.15} 
-          bokehScale={5} 
+          focusDistance={0} 
+          focalLength={0.12} 
+          bokehScale={3.5} 
           height={480} 
         />
-        {/* Soft, wide bloom for a cozy glow */}
         <Bloom 
-          luminanceThreshold={0.1} 
+          luminanceThreshold={0.15} 
           mipmapBlur 
-          intensity={1.2} 
+          intensity={1.0} 
         />
       </EffectComposer>
     </>

@@ -24,8 +24,8 @@ export default function TransitionCurtain({ label = '', delay = 0.72, children }
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: wrapRef.current,
-          start: `top ${Math.round(delay * 100)}%`,
-          once: true,
+          start: `top 85%`,
+          toggleActions: "play none none reverse"
         }
       });
 

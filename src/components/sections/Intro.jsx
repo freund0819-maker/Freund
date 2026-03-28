@@ -33,7 +33,7 @@ export default function Intro() {
   }, []);
 
   return (
-    <section ref={containerRef} id="intro" style={{ justifyContent: 'flex-end', paddingBottom: '12vh' }}>
+    <section ref={containerRef} id="intro" style={{ justifyContent: 'center', paddingTop: '20vh' }}>
       {/* Ghost watermark */}
       <div
         aria-hidden="true"

@@ -20,6 +20,7 @@ function GalleryItem({ title, category, beauty, ao, solid, span = 6 }) {
 
   const images = [beauty, ao, solid];
   const currentImage = images[passIndex];
+  const isEmpty = !beauty;
 
   const cyclePass = (e, idx) => {
     e.stopPropagation();
@@ -28,33 +29,41 @@ function GalleryItem({ title, category, beauty, ao, solid, span = 6 }) {
 
   return (
     <article
-      className="gallery-item"
+      className={`gallery-item accent-corners ${isEmpty ? 'placeholder' : ''}`}
       style={{ gridColumn: `span ${span}` }}
     >
-      <img
-        src={currentImage}
-        alt={`${title} — ${PASSES[passIndex]}`}
-        loading="lazy"
-      />
+      {isEmpty ? (
+        <div className="gallery-placeholder">
+          [ UNTITLED PROJECT / PENDING ]
+        </div>
+      ) : (
+        <>
+          <img
+            src={currentImage}
+            alt={`${title} — ${PASSES[passIndex]}`}
+            loading="lazy"
+          />
 
-      {/* Pass badges — top right, visible on hover */}
-      <div className="pass-badge-row">
-        {PASSES.map((p, i) => (
-          <button
-            key={p}
-            className={`pass-badge${passIndex === i ? ' active' : ''}`}
-            onClick={(e) => cyclePass(e, i)}
-            title={`Show ${p} pass`}
-          >
-            {p}
-          </button>
-        ))}
-      </div>
+          {/* Pass badges — top right, visible on hover */}
+          <div className="pass-badge-row">
+            {PASSES.map((p, i) => (
+              <button
+                key={p}
+                className={`pass-badge${passIndex === i ? ' active' : ''}`}
+                onClick={(e) => cyclePass(e, i)}
+                title={`Show ${p} pass`}
+              >
+                {p}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
 
       {/* Bottom overlay: title + category */}
       <div className="gallery-overlay">
-        <h3>{title}</h3>
-        <p>{category}</p>
+        <h3>{title || "NEW VENTURE"}</h3>
+        <p>{category || "In Progress"}</p>
       </div>
     </article>
   );
@@ -87,8 +96,12 @@ export default function Display() {
       beauty: render3,
       ao: render3_ao,
       solid: render3_solid,
-      span: 12,  // Use full width if it's roughly square/portrait — fills the row alone
+      span: 12,
     },
+    { title: '', category: '', span: 6 },
+    { title: '', category: '', span: 6 },
+    { title: '', category: '', span: 4 },
+    { title: '', category: '', span: 8 },
   ];
 
   return (

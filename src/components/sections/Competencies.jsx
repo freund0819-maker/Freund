@@ -15,7 +15,7 @@ export default function Competencies() {
           TOOLS &amp; SKILLS
         </h2>
 
-        <div style={{ maxWidth: '900px' }}>
+        <div className="accent-corners" style={{ maxWidth: '900px', position: 'relative', padding: '1rem 0' }}>
           {tools.map((tool, i) => (
             <div key={i} className="tool-item">
               <span className="tool-name">{tool.name}</span>

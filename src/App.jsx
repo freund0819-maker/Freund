@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 
 // Components
 import Background3D from './components/Background3D';
+import SectionDivider from './components/SectionDivider';
 import Intro from './components/sections/Intro';
 import Display from './components/sections/Display';
 import Competencies from './components/sections/Competencies';
@@ -24,9 +25,13 @@ function App() {
       {/* Foreground Content Layer */}
       <div className="content-wrapper">
         <Intro />
+        <SectionDivider label="Gallery" />
         <Display />
+        <SectionDivider label="Profile" />
         <About />
+        <SectionDivider label="Competencies" />
         <Competencies />
+        <SectionDivider label="Connect" />
         <Socials />
       </div>
     </div>
