@@ -4,12 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/**
- * SectionDivider
- * A horizontal scan-line that shoots across the viewport
- * as the user scrolls into a new section.
- * Feels like a tape-cut or typesetting rule — editorial and precise.
- */
 export default function SectionDivider({ label = '' }) {
   const wrapRef = useRef(null);
   const lineRef = useRef(null);
@@ -26,25 +20,22 @@ export default function SectionDivider({ label = '' }) {
         }
       });
 
-      // Dot appears first at left edge
       tl.fromTo(dotRef.current,
         { scaleX: 0, opacity: 0 },
-        { scaleX: 1, opacity: 1, duration: 0.18, ease: 'power2.out' },
+        { scaleX: 1, opacity: 1, duration: 0.2, ease: 'power2.out' },
         0
       );
 
-      // Line shoots right at high speed
       tl.fromTo(lineRef.current,
         { scaleX: 0 },
-        { scaleX: 1, duration: 0.55, ease: 'power3.out' },
+        { scaleX: 1, duration: 0.6, ease: 'power3.out' },
         0.12
       );
 
-      // Label fades in after the line passes it
       tl.fromTo(labelRef.current,
-        { opacity: 0, x: -6 },
-        { opacity: 1, x: 0, duration: 0.35, ease: 'power2.out' },
-        0.45
+        { opacity: 0, x: -8 },
+        { opacity: 1, x: 0, duration: 0.4, ease: 'power2.out' },
+        0.5
       );
     }, wrapRef);
 
@@ -57,52 +48,50 @@ export default function SectionDivider({ label = '' }) {
       style={{
         position: 'relative',
         width: '100%',
-        height: '32px',
+        height: '36px',
         display: 'flex',
         alignItems: 'center',
-        padding: '0 7vw',
+        padding: '0 8vw',
         zIndex: 20,
-        background: 'rgba(3,3,3,0.9)',
+        background: 'rgba(10,10,11,0.92)',
         overflow: 'hidden',
       }}
     >
-      {/* Leading dot */}
       <div
         ref={dotRef}
         style={{
-          width: '4px',
-          height: '4px',
+          width: '5px',
+          height: '5px',
           borderRadius: '50%',
           background: 'var(--accent-color)',
-          boxShadow: '0 0 8px rgba(0,255,65,0.8)',
+          boxShadow: '0 0 10px rgba(232,168,73,0.7)',
           flexShrink: 0,
           transformOrigin: 'left center',
         }}
       />
 
-      {/* Scan line */}
       <div
         ref={lineRef}
         style={{
           flex: 1,
           height: '1px',
-          background: 'linear-gradient(90deg, var(--accent-color), rgba(0,255,65,0.15))',
+          background: 'linear-gradient(90deg, var(--accent-color), rgba(232,168,73,0.1))',
           transformOrigin: 'left center',
-          boxShadow: '0 0 6px rgba(0,255,65,0.4)',
+          boxShadow: '0 0 8px rgba(232,168,73,0.3)',
         }}
       />
 
-      {/* Section name label */}
       {label && (
         <span
           ref={labelRef}
           style={{
-            fontFamily: "'Orbitron', sans-serif",
-            fontSize: '0.55rem',
-            letterSpacing: '0.3em',
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontSize: '0.58rem',
+            fontWeight: 500,
+            letterSpacing: '0.25em',
             textTransform: 'uppercase',
             color: 'var(--accent-color)',
-            opacity: 0.7,
+            opacity: 0.65,
             padding: '0 0 0 1rem',
             flexShrink: 0,
             whiteSpace: 'nowrap',

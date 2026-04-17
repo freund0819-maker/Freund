@@ -1,5 +1,5 @@
 import React from 'react';
-import freundImg from '../../assets/Freund.jpeg';
+import freundImg from '../../assets/Freund.webp';
 import TransitionCurtain from '../TransitionCurtain';
 
 export default function About() {
@@ -16,7 +16,7 @@ export default function About() {
           alignItems: 'start',
         }}>
           <div>
-            <h2 style={{ fontSize: 'clamp(1.8rem, 5vw, 3.5rem)', marginBottom: '2rem', letterSpacing: '0.04em' }}>
+            <h2 style={{ fontSize: 'clamp(1.8rem, 5vw, 3.5rem)', marginBottom: '2rem' }}>
               WHO I AM
             </h2>
             <p style={{ fontSize: '1rem', lineHeight: '1.9', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
@@ -25,6 +25,22 @@ export default function About() {
             <p style={{ fontSize: '1rem', lineHeight: '1.9', color: 'var(--text-secondary)' }}>
               Based in Brandenburg, Germany. Passionate about exploring new techniques and building compelling digital works, primarily utilizing Blender and Clip Studio Paint.
             </p>
+
+            {/* Stats row */}
+            <div className="stats-row">
+              <div className="stat-item">
+                <span className="stat-value">5+</span>
+                <span className="stat-label">Years Experience</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-value">7</span>
+                <span className="stat-label">Projects</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-value">2</span>
+                <span className="stat-label">Core Tools</span>
+              </div>
+            </div>
           </div>
 
           {/* Image: stylized border, refined size, right-aligned */}
@@ -32,13 +48,19 @@ export default function About() {
             overflow: 'hidden', 
             maxWidth: '420px', 
             marginLeft: 'auto',
-            padding: '1rem',
-            borderRadius: '2px'
+            padding: '0.8rem',
+            borderRadius: '4px',
           }}>
             <img
               src={freundImg}
-              alt="Freund"
-              style={{ display: 'block', width: '100%', height: 'auto', objectFit: 'cover' }}
+              alt="Freund — 3D Artist"
+              style={{ 
+                display: 'block', 
+                width: '100%', 
+                height: 'auto', 
+                objectFit: 'cover',
+                borderRadius: '2px',
+              }}
             />
           </div>
         </div>

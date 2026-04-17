@@ -3,8 +3,8 @@ import TransitionCurtain from '../TransitionCurtain';
 
 export default function Competencies() {
   const tools = [
-    { name: 'Blender', xp: '5+ Years', description: '3D Modelling · Rendering · Rigging' },
-    { name: 'Clip Studio Paint', xp: '4+ Years', description: 'Digital Illustration · Compositing' },
+    { name: 'Blender', xp: '5+ Years', description: '3D Modelling · Rendering · Rigging', level: 90 },
+    { name: 'Clip Studio Paint', xp: '4+ Years', description: 'Digital Illustration · Compositing', level: 80 },
   ];
 
   return (
@@ -12,7 +12,7 @@ export default function Competencies() {
       <span className="section-number">04 / 04</span>
       <TransitionCurtain label="SKILLS">
         <p className="section-label">Competencies</p>
-        <h2 style={{ fontSize: 'clamp(1.8rem, 5vw, 3.5rem)', marginBottom: '3rem', letterSpacing: '0.04em' }}>
+        <h2 style={{ fontSize: 'clamp(1.8rem, 5vw, 3.5rem)', marginBottom: '3rem' }}>
           TOOLS &amp; SKILLS
         </h2>
 
@@ -25,6 +25,12 @@ export default function Competencies() {
                   {tool.xp}
                 </div>
                 <div className="tool-meta">{tool.description}</div>
+                <div className="skill-bar-track">
+                  <div
+                    className="skill-bar-fill"
+                    style={{ width: `${tool.level}%` }}
+                  />
+                </div>
               </div>
             </div>
           ))}

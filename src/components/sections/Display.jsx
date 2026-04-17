@@ -1,24 +1,24 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import TransitionCurtain from '../TransitionCurtain';
 
-import render1 from '../../assets/RENDER1.jpeg';
-import render1_ao from '../../assets/RENDER1_AO.jpeg';
-import render1_solid from '../../assets/RENDER1_SOLID.jpeg';
+import render1 from '../../assets/RENDER1.webp';
+import render1_ao from '../../assets/RENDER1_AO.webp';
+import render1_solid from '../../assets/RENDER1_SOLID.webp';
 
-import render2 from '../../assets/RENDER2.jpeg';
-import render2_ao from '../../assets/RENDER2_AO.jpeg';
-import render2_solid from '../../assets/RENDER2_SOLID.jpeg';
+import render2 from '../../assets/RENDER2.webp';
+import render2_ao from '../../assets/RENDER2_AO.webp';
+import render2_solid from '../../assets/RENDER2_SOLID.webp';
 
-import render3 from '../../assets/RENDER3.jpeg';
-import render3_ao from '../../assets/RENDER3_AO.jpeg';
-import render3_solid from '../../assets/RENDER3_SOLID.jpeg';
+import render3 from '../../assets/RENDER3.webp';
+import render3_ao from '../../assets/RENDER3_AO.webp';
+import render3_solid from '../../assets/RENDER3_SOLID.webp';
 
-import render4 from '../../assets/RENDER4.jpeg';
-import render5 from '../../assets/RENDER5.jpeg';
-import render6 from '../../assets/RENDER6.jpeg';
+import render4 from '../../assets/RENDER4.webp';
+import render5 from '../../assets/RENDER5.webp';
+import render6 from '../../assets/RENDER6.webp';
 import render7 from '../../assets/RENDER7.mp4';
 
-function GalleryItem({ title, category, beauty, ao, solid, span = 6, isVideo = false }) {
+function GalleryItem({ title, category, beauty, ao, solid, span = 6, isVideo = false, index, onOpenLightbox }) {
   const passesAvailable = [];
   if (beauty) passesAvailable.push({ label: 'FINAL', src: beauty });
   if (ao) passesAvailable.push({ label: 'AO', src: ao });
@@ -33,10 +33,22 @@ function GalleryItem({ title, category, beauty, ao, solid, span = 6, isVideo = f
     setPassIndex(idx);
   };
 
+  const handleClick = () => {
+    if (!isEmpty && onOpenLightbox) {
+      onOpenLightbox({
+        src: currentAsset,
+        title,
+        category,
+        isVideo: isVideo && passIndex === 0,
+      });
+    }
+  };
+
   return (
     <article
-      className={`gallery-item accent-corners ${isEmpty ? 'placeholder' : ''}`}
+      className={`gallery-item ${isEmpty ? 'placeholder' : ''}`}
       style={{ gridColumn: `span ${span}` }}
+      onClick={handleClick}
     >
       {isEmpty ? (
         <div className="gallery-placeholder">
@@ -60,6 +72,11 @@ function GalleryItem({ title, category, beauty, ao, solid, span = 6, isVideo = f
               loading="lazy"
             />
           )}
+
+          {/* Project index */}
+          <span className="gallery-index">
+            {String(index + 1).padStart(2, '0')}
+          </span>
 
           {/* Pass badges — top right, visible on hover */}
           {passesAvailable.length > 1 && (
@@ -88,7 +105,69 @@ function GalleryItem({ title, category, beauty, ao, solid, span = 6, isVideo = f
   );
 }
 
+function Lightbox({ data, onClose }) {
+  if (!data) return null;
+
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) onClose();
+  };
+
+  return (
+    <div className="lightbox-overlay" onClick={handleOverlayClick}>
+      <button className="lightbox-close" onClick={onClose}>
+        ESC · Close
+      </button>
+
+      {data.isVideo ? (
+        <video
+          src={data.src}
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{ maxWidth: '90vw', maxHeight: '88vh', objectFit: 'contain', borderRadius: '4px' }}
+        />
+      ) : (
+        <img
+          src={data.src}
+          alt={data.title}
+        />
+      )}
+
+      <div className="lightbox-info">
+        <h3>{data.title}</h3>
+        <p>{data.category}</p>
+      </div>
+    </div>
+  );
+}
+
 export default function Display() {
+  const [lightboxData, setLightboxData] = useState(null);
+
+  const handleOpenLightbox = useCallback((data) => {
+    setLightboxData(data);
+  }, []);
+
+  const handleCloseLightbox = useCallback(() => {
+    setLightboxData(null);
+  }, []);
+
+  // Close on ESC key
+  React.useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === 'Escape') handleCloseLightbox();
+    };
+    if (lightboxData) {
+      window.addEventListener('keydown', handleKey);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
+    };
+  }, [lightboxData, handleCloseLightbox]);
+
   const artworks = [
     {
       title: 'Colours Cascade',
@@ -142,20 +221,29 @@ export default function Display() {
   ];
 
   return (
-    <section id="display" style={{ position: 'relative' }}>
-      <span className="section-number">02 / 04</span>
-      <TransitionCurtain label="WORKS">
-        <p className="section-label">Selected Works</p>
-        <h2 style={{ fontSize: 'clamp(1.8rem, 5vw, 3.5rem)', marginBottom: '3rem', letterSpacing: '0.04em' }}>
-          GALLERY
-        </h2>
+    <>
+      <section id="display" style={{ position: 'relative' }}>
+        <span className="section-number">02 / 04</span>
+        <TransitionCurtain label="WORKS">
+          <p className="section-label">Selected Works</p>
+          <h2 style={{ fontSize: 'clamp(1.8rem, 5vw, 3.5rem)', marginBottom: '3rem' }}>
+            GALLERY
+          </h2>
 
-        <div className="gallery-grid">
-          {artworks.map((art, i) => (
-            <GalleryItem key={i} {...art} />
-          ))}
-        </div>
-      </TransitionCurtain>
-    </section>
+          <div className="gallery-grid">
+            {artworks.map((art, i) => (
+              <GalleryItem
+                key={i}
+                {...art}
+                index={i}
+                onOpenLightbox={handleOpenLightbox}
+              />
+            ))}
+          </div>
+        </TransitionCurtain>
+      </section>
+
+      <Lightbox data={lightboxData} onClose={handleCloseLightbox} />
+    </>
   );
 }

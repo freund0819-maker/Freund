@@ -9,16 +9,16 @@ export default function Socials() {
         <p className="section-label">Get in Touch</p>
 
         <div className="glass-panel accent-corners" style={{ maxWidth: '640px', padding: '3rem 2.5rem', position: 'relative' }}>
-          <h2 style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)', lineHeight: 1.05, marginBottom: '2rem', letterSpacing: '0.02em' }}>
+          <h2 style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)', lineHeight: 1.05, marginBottom: '1.5rem' }}>
             LET'S<br />CONNECT
           </h2>
-          <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', fontSize: '1rem', lineHeight: 1.8 }}>
+          <p style={{ color: 'var(--text-secondary)', marginBottom: '2.5rem', fontSize: '1rem', lineHeight: 1.8 }}>
             Available for freelance opportunities and visionary collaborations.
           </p>
 
           <MagneticButton
             className="futuristic-btn"
-            style={{ fontSize: '0.8rem' }}
+            style={{ fontSize: '0.78rem' }}
             onClick={() => window.open('https://freund0815.artstation.com/', '_blank')}
           >
             VIEW ARTSTATION
