@@ -1,5 +1,4 @@
-import React, { useRef, useState, useCallback } from 'react';
-import TransitionCurtain from '../TransitionCurtain';
+import React, { useState, useCallback } from 'react';
 
 import render1 from '../../assets/RENDER1.webp';
 import render1_ao from '../../assets/RENDER1_AO.webp';
@@ -19,28 +18,19 @@ import render6 from '../../assets/RENDER6.webp';
 import render7 from '../../assets/RENDER7.mp4';
 
 function GalleryItem({ title, category, beauty, ao, solid, span = 6, isVideo = false, index, onOpenLightbox }) {
-  const passesAvailable = [];
-  if (beauty) passesAvailable.push({ label: 'FINAL', src: beauty });
-  if (ao) passesAvailable.push({ label: 'AO', src: ao });
-  if (solid) passesAvailable.push({ label: 'SOLID', src: solid });
+  const passes = [];
+  if (beauty) passes.push({ label: 'FINAL', src: beauty });
+  if (ao)     passes.push({ label: 'AO',    src: ao });
+  if (solid)  passes.push({ label: 'SOLID', src: solid });
 
-  const [passIndex, setPassIndex] = useState(0);
-  const currentAsset = passesAvailable[passIndex]?.src;
-  const isEmpty = passesAvailable.length === 0;
+  const [passIdx, setPassIdx] = useState(0);
+  const current = passes[passIdx]?.src;
+  const isEmpty = passes.length === 0;
 
-  const cyclePass = (e, idx) => {
-    e.stopPropagation();
-    setPassIndex(idx);
-  };
-
+  const cyclePass = (e, i) => { e.stopPropagation(); setPassIdx(i); };
   const handleClick = () => {
     if (!isEmpty && onOpenLightbox) {
-      onOpenLightbox({
-        src: currentAsset,
-        title,
-        category,
-        isVideo: isVideo && passIndex === 0,
-      });
+      onOpenLightbox({ src: current, title, category, isVideo: isVideo && passIdx === 0 });
     }
   };
 
@@ -51,42 +41,25 @@ function GalleryItem({ title, category, beauty, ao, solid, span = 6, isVideo = f
       onClick={handleClick}
     >
       {isEmpty ? (
-        <div className="gallery-placeholder">
-          [ UNTITLED PROJECT / PENDING ]
-        </div>
+        <div className="gallery-placeholder">[ UNTITLED / PENDING ]</div>
       ) : (
         <>
-          {isVideo && passIndex === 0 ? (
-            <video
-              src={currentAsset}
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{ display: 'block', width: '100%', height: 'auto' }}
-            />
+          {isVideo && passIdx === 0 ? (
+            <video src={current} autoPlay muted loop playsInline style={{ display:'block', width:'100%', height:'auto' }} />
           ) : (
-            <img
-              src={currentAsset}
-              alt={`${title} — ${passesAvailable[passIndex]?.label}`}
-              loading="lazy"
-            />
+            <img src={current} alt={`${title} — ${passes[passIdx]?.label}`} loading="lazy" />
           )}
 
-          {/* Project index */}
-          <span className="gallery-index">
-            {String(index + 1).padStart(2, '0')}
-          </span>
+          <span className="gallery-index">{String(index + 1).padStart(2, '0')}</span>
 
-          {/* Pass badges — top right, visible on hover */}
-          {passesAvailable.length > 1 && (
+          {passes.length > 1 && (
             <div className="pass-badge-row">
-              {passesAvailable.map((p, i) => (
+              {passes.map((p, i) => (
                 <button
                   key={p.label}
-                  className={`pass-badge${passIndex === i ? ' active' : ''}`}
+                  className={`pass-badge${passIdx === i ? ' active' : ''}`}
                   onClick={(e) => cyclePass(e, i)}
-                  title={`Show ${p.label} pass`}
+                  title={`Show ${p.label}`}
                 >
                   {p.label}
                 </button>
@@ -96,10 +69,9 @@ function GalleryItem({ title, category, beauty, ao, solid, span = 6, isVideo = f
         </>
       )}
 
-      {/* Bottom overlay: title + category */}
       <div className="gallery-overlay">
-        <h3>{title || "NEW VENTURE"}</h3>
-        <p>{category || "In Progress"}</p>
+        <h3>{title || 'NEW VENTURE'}</h3>
+        <p>{category || 'In Progress'}</p>
       </div>
     </article>
   );
@@ -107,33 +79,13 @@ function GalleryItem({ title, category, beauty, ao, solid, span = 6, isVideo = f
 
 function Lightbox({ data, onClose }) {
   if (!data) return null;
-
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) onClose();
-  };
-
   return (
-    <div className="lightbox-overlay" onClick={handleOverlayClick}>
-      <button className="lightbox-close" onClick={onClose}>
-        ESC · Close
-      </button>
-
-      {data.isVideo ? (
-        <video
-          src={data.src}
-          autoPlay
-          muted
-          loop
-          playsInline
-          style={{ maxWidth: '90vw', maxHeight: '88vh', objectFit: 'contain', borderRadius: '4px' }}
-        />
-      ) : (
-        <img
-          src={data.src}
-          alt={data.title}
-        />
-      )}
-
+    <div className="lightbox-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
+      <button className="lightbox-close" onClick={onClose}>ESC · Close</button>
+      {data.isVideo
+        ? <video src={data.src} autoPlay muted loop playsInline style={{ maxWidth:'90vw', maxHeight:'88vh', objectFit:'contain' }} />
+        : <img src={data.src} alt={data.title} />
+      }
       <div className="lightbox-info">
         <h3>{data.title}</h3>
         <p>{data.category}</p>
@@ -144,106 +96,47 @@ function Lightbox({ data, onClose }) {
 
 export default function Display() {
   const [lightboxData, setLightboxData] = useState(null);
+  const open  = useCallback((d) => setLightboxData(d), []);
+  const close = useCallback(() => setLightboxData(null), []);
 
-  const handleOpenLightbox = useCallback((data) => {
-    setLightboxData(data);
-  }, []);
-
-  const handleCloseLightbox = useCallback(() => {
-    setLightboxData(null);
-  }, []);
-
-  // Close on ESC key
   React.useEffect(() => {
-    const handleKey = (e) => {
-      if (e.key === 'Escape') handleCloseLightbox();
-    };
+    const onKey = (e) => { if (e.key === 'Escape') close(); };
     if (lightboxData) {
-      window.addEventListener('keydown', handleKey);
+      window.addEventListener('keydown', onKey);
       document.body.style.overflow = 'hidden';
     }
-    return () => {
-      window.removeEventListener('keydown', handleKey);
-      document.body.style.overflow = '';
-    };
-  }, [lightboxData, handleCloseLightbox]);
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
+  }, [lightboxData, close]);
 
   const artworks = [
-    {
-      title: 'Colours Cascade',
-      category: 'Modelling',
-      beauty: render1,
-      ao: render1_ao,
-      solid: render1_solid,
-      span: 8,
-    },
-    {
-      title: 'Merry Christmas',
-      category: '3D-Art Contest',
-      beauty: render2,
-      ao: render2_ao,
-      solid: render2_solid,
-      span: 4,
-    },
-    {
-      title: 'Discord Reimagined',
-      category: 'Branding',
-      beauty: render3,
-      ao: render3_ao,
-      solid: render3_solid,
-      span: 4,
-    },
-    {
-      title: 'All an Illusion!',
-      category: 'Concept Art',
-      beauty: render4,
-      span: 6,
-    },
-    {
-      title: 'The End',
-      category: 'Modelling',
-      beauty: render5,
-      span: 6,
-    },
-    {
-      title: 'Glass with Liquid',
-      category: 'Look Dev',
-      beauty: render6,
-      span: 4,
-    },
-    {
-      title: 'Nanobots',
-      category: 'Animation',
-      beauty: render7,
-      isVideo: true,
-      span: 8,
-    },
+    { title: 'Colours Cascade',   category: 'Modelling',      beauty: render1, ao: render1_ao, solid: render1_solid, span: 8 },
+    { title: 'Merry Christmas',   category: '3D-Art Contest',  beauty: render2, ao: render2_ao, solid: render2_solid, span: 4 },
+    { title: 'Discord Reimagined',category: 'Branding',        beauty: render3, ao: render3_ao, solid: render3_solid, span: 4 },
+    { title: 'All an Illusion!',  category: 'Concept Art',     beauty: render4, span: 6 },
+    { title: 'The End',           category: 'Modelling',       beauty: render5, span: 6 },
+    { title: 'Glass with Liquid', category: 'Look Dev',        beauty: render6, span: 4 },
+    { title: 'Nanobots',          category: 'Animation',       beauty: render7, isVideo: true, span: 8 },
   ];
 
   return (
     <>
-      <section id="display" style={{ position: 'relative' }}>
+      <section id="display">
         <span className="section-number">02 / 04</span>
-        <TransitionCurtain label="WORKS">
-          <p className="section-label">Selected Works</p>
-          <h2 style={{ fontSize: 'clamp(1.8rem, 5vw, 3.5rem)', marginBottom: '3rem' }}>
-            GALLERY
-          </h2>
 
-          <div className="gallery-grid">
-            {artworks.map((art, i) => (
-              <GalleryItem
-                key={i}
-                {...art}
-                index={i}
-                onOpenLightbox={handleOpenLightbox}
-              />
-            ))}
-          </div>
-        </TransitionCurtain>
+        {/* Header sits above the edge-to-edge grid */}
+        <div className="gallery-header">
+          <p className="section-label">Selected Works</p>
+          <h2>GALLERY</h2>
+        </div>
+
+        <div className="gallery-grid">
+          {artworks.map((art, i) => (
+            <GalleryItem key={i} {...art} index={i} onOpenLightbox={open} />
+          ))}
+        </div>
       </section>
 
-      <Lightbox data={lightboxData} onClose={handleCloseLightbox} />
+      <Lightbox data={lightboxData} onClose={close} />
     </>
   );
 }

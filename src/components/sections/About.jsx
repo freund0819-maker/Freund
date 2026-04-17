@@ -26,11 +26,10 @@ export default function About() {
               Based in Brandenburg, Germany. Passionate about exploring new techniques and building compelling digital works, primarily utilizing Blender and Clip Studio Paint.
             </p>
 
-            {/* Stats row */}
             <div className="stats-row">
               <div className="stat-item">
                 <span className="stat-value">5+</span>
-                <span className="stat-label">Years Experience</span>
+                <span className="stat-label">Years</span>
               </div>
               <div className="stat-item">
                 <span className="stat-value">7</span>
@@ -43,24 +42,17 @@ export default function About() {
             </div>
           </div>
 
-          {/* Image: stylized border, refined size, right-aligned */}
-          <div className="glass-panel accent-corners" style={{ 
-            overflow: 'hidden', 
-            maxWidth: '420px', 
+          <div className="glass-panel accent-corners" style={{
+            overflow: 'hidden',
+            maxWidth: '420px',
             marginLeft: 'auto',
-            padding: '0.8rem',
+            padding: '0.6rem',
             borderRadius: '4px',
           }}>
             <img
               src={freundImg}
               alt="Freund — 3D Artist"
-              style={{ 
-                display: 'block', 
-                width: '100%', 
-                height: 'auto', 
-                objectFit: 'cover',
-                borderRadius: '2px',
-              }}
+              style={{ display: 'block', width: '100%', height: 'auto', objectFit: 'cover', borderRadius: '2px' }}
             />
           </div>
         </div>
